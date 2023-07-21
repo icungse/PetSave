@@ -32,35 +32,47 @@
 
 import Foundation
 
-struct Animal: Codable {
-  var id: Int?
-  let organizationId: String?
-  let url: URL?
-  let type: String
-  let species: String?
-  var breeds: Breed
-  var colors: APIColors
-  let age: Age
-  let gender: Gender
-  let size: Size
-  let coat: Coat?
-  let name: String
-  let description: String?
-  let photos: [PhotoSizes]
-  let videos: [VideoLink]
-  let status: AdoptionStatus
-  var attributes: AnimalAttributes
-  var environment: AnimalEnvironment?
-  let tags: [String]
-  var contact: Contact
-  let publishedAt: String?
-  let distance: Double?
-  var ranking: Int? = 0
+enum AnimalsRequest: RequestProtocol {
+  case getAnimalsWith(
+    page: Int, latitude: Double?, longitude: Double?)
+  case getAnimalsBy(name: String, age: String?, type: String?)
   
-  var picture: URL? {
-    photos.first?.medium ?? photos.first?.large
+  var path: String {
+    "/v2/animals"
   }
-}
-
-extension Animal: Identifiable {
+  
+  var urlParams: [String: String?] {
+    switch self {
+    case let .getAnimalsWith(page, latitude, longitude):
+      var params = ["page": String(page)]
+      if let latitude = latitude {
+        params["latitude"] = String(latitude)
+      }
+      
+      if let longitude = longitude {
+        params["longitude"] = String(longitude)
+      }
+      params["sort"] = "random"
+      return params
+      
+    case let .getAnimalsBy(name, age, type):
+      var params: [String: String] = [:]
+      if !name.isEmpty {
+        params["name"] = name
+      }
+      
+      if let age = age {
+        params["age"] = age
+      }
+      
+      if let type = type {
+        params["type"] = type
+      }
+      return params
+    }
+  }
+  
+  var requestType: RequestType {
+    .GET
+  }
 }

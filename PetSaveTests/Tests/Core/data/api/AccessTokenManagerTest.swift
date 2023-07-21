@@ -30,37 +30,61 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import XCTest
 
-struct Animal: Codable {
-  var id: Int?
-  let organizationId: String?
-  let url: URL?
-  let type: String
-  let species: String?
-  var breeds: Breed
-  var colors: APIColors
-  let age: Age
-  let gender: Gender
-  let size: Size
-  let coat: Coat?
-  let name: String
-  let description: String?
-  let photos: [PhotoSizes]
-  let videos: [VideoLink]
-  let status: AdoptionStatus
-  var attributes: AnimalAttributes
-  var environment: AnimalEnvironment?
-  let tags: [String]
-  var contact: Contact
-  let publishedAt: String?
-  let distance: Double?
-  var ranking: Int? = 0
-  
-  var picture: URL? {
-    photos.first?.medium ?? photos.first?.large
-  }
-}
+@testable import PetSave
 
-extension Animal: Identifiable {
+class AccessTokenManagerTest: XCTestCase {
+    private var accessTokenManager: AccessTokenManagerProtocol?
+    let token = AccessTokenTestHelper.randomAPIToken()
+    
+    override func setUp() {
+        super.setUp()
+        
+        guard let userDefaults = UserDefaults(suiteName: #file) else {
+            return
+        }
+        
+        userDefaults.removePersistentDomain(forName: #file)
+        userDefaults.set(token.expiresIn, forKey: AppUserDefaultsKeys.expiresAt)
+        userDefaults.set(token.bearerAccessToken, forKey: AppUserDefaultsKeys.bearerAccessToken)
+        
+        accessTokenManager = AccessTokenManager(userDefaults: userDefaults)
+    }
+    
+    override class func tearDown() {
+        super.tearDown()
+        
+        //    accessTokenManager = nil
+    }
+    
+    func testRequestToken() async throws {
+        guard let token = accessTokenManager?.fetchToken() else {
+            XCTFail("Token not found")
+            return
+        }
+        
+        XCTAssertFalse(token.isEmpty)
+    }
+    
+    func testCachedToken() async throws {
+        guard let sameToken = accessTokenManager?.fetchToken() else {
+            XCTFail("Token not found")
+            return
+        }
+        
+        XCTAssertEqual(token.bearerAccessToken, sameToken)
+    }
+    
+    func testRefreshToken() async throws {
+        let newToken = AccessTokenTestHelper.randomAPIToken()
+        guard let accessTokenManager = accessTokenManager else {
+            XCTFail("Access token manager object is nil")
+            return
+        }
+        
+        try accessTokenManager.refreshWith(apiToken: newToken)
+        XCTAssertNotEqual(token.bearerAccessToken, accessTokenManager.fetchToken())
+        XCTAssertEqual(newToken.bearerAccessToken, accessTokenManager.fetchToken())
+    }
 }

@@ -32,35 +32,32 @@
 
 import Foundation
 
-struct Animal: Codable {
-  var id: Int?
-  let organizationId: String?
-  let url: URL?
-  let type: String
-  let species: String?
-  var breeds: Breed
-  var colors: APIColors
-  let age: Age
-  let gender: Gender
-  let size: Size
-  let coat: Coat?
-  let name: String
-  let description: String?
-  let photos: [PhotoSizes]
-  let videos: [VideoLink]
-  let status: AdoptionStatus
-  var attributes: AnimalAttributes
-  var environment: AnimalEnvironment?
-  let tags: [String]
-  var contact: Contact
-  let publishedAt: String?
-  let distance: Double?
-  var ranking: Int? = 0
-  
-  var picture: URL? {
-    photos.first?.medium ?? photos.first?.large
-  }
+protocol APIManagerProtocol {
+  func perform(_ request: RequestProtocol, authToken: String) async throws -> Data
+  func requestToken() async throws -> Data
 }
 
-extension Animal: Identifiable {
+
+class APIManager: APIManagerProtocol {
+  private let urlSession: URLSession
+  
+  init(urlSession: URLSession = URLSession.shared) {
+    self.urlSession = urlSession
+  }
+  
+  func perform(_ request: RequestProtocol,
+               authToken: String = "") async throws -> Data {
+    let (data, response) = try await urlSession.data(for: request.createURLRequest(authToken: authToken))
+    guard let httpResponse = response as? HTTPURLResponse,
+          httpResponse.statusCode == 200
+    else {
+      throw NetworkError.invalidServerResponse
+    }
+    return data
+  }
+
+  
+  func requestToken() async throws -> Data {
+    try await perform(AuthTokenRequest.auth)
+  }
 }

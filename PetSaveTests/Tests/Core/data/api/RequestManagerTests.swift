@@ -30,37 +30,50 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import PetSave
 
-struct Animal: Codable {
-  var id: Int?
-  let organizationId: String?
-  let url: URL?
-  let type: String
-  let species: String?
-  var breeds: Breed
-  var colors: APIColors
-  let age: Age
-  let gender: Gender
-  let size: Size
-  let coat: Coat?
-  let name: String
-  let description: String?
-  let photos: [PhotoSizes]
-  let videos: [VideoLink]
-  let status: AdoptionStatus
-  var attributes: AnimalAttributes
-  var environment: AnimalEnvironment?
-  let tags: [String]
-  var contact: Contact
-  let publishedAt: String?
-  let distance: Double?
-  var ranking: Int? = 0
+class RequestManagerTests: XCTestCase {
+  private var requestManager: RequestManagerProtocol?
   
-  var picture: URL? {
-    photos.first?.medium ?? photos.first?.large
+  override func setUp() {
+    super.setUp()
+    
+    guard let userDefaults = UserDefaults(suiteName: #file) else {
+      return
+    }
+    
+    userDefaults.removePersistentDomain(forName: #file)
+    
+    requestManager = RequestManager(
+      apiManager: APIManagerMock(),
+      accessTokenManager: AccessTokenManager(userDefaults: userDefaults)
+    )
   }
-}
-
-extension Animal: Identifiable {
+  
+  func testRequestAnimals() async throws {
+    guard let container: AnimalsContainer =
+            try await requestManager?.perform(
+              AnimalsRequestMock.getAnimals) else {
+      XCTFail("Didn't get data from the request manager")
+      return
+    }
+    
+    let animals = container.animals
+    
+    let first = animals.first
+    let last = animals.last
+    
+    XCTAssertEqual(first?.name, "Kiki")
+    XCTAssertEqual(first?.age.rawValue, "Adult")
+    XCTAssertEqual(first?.gender.rawValue, "Female")
+    XCTAssertEqual(first?.size.rawValue, "Medium")
+    XCTAssertEqual(first?.coat?.rawValue, "Short")
+    
+    XCTAssertEqual(last?.name, "Midnight")
+    XCTAssertEqual(last?.age.rawValue, "Adult")
+    XCTAssertEqual(last?.gender.rawValue, "Female")
+    XCTAssertEqual(last?.size.rawValue, "Large")
+    XCTAssertEqual(last?.coat, nil)
+  }
 }
