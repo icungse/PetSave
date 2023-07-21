@@ -32,35 +32,14 @@
 
 import Foundation
 
-struct Animal: Codable {
-  var id: Int?
-  let organizationId: String?
-  let url: URL?
-  let type: String
-  let species: String?
-  var breeds: Breed
-  var colors: APIColors
-  let age: Age
-  let gender: Gender
-  let size: Size
-  let coat: Coat?
-  let name: String
-  let description: String?
-  let photos: [PhotoSizes]
-  let videos: [VideoLink]
-  let status: AdoptionStatus
-  var attributes: AnimalAttributes
-  var environment: AnimalEnvironment?
-  let tags: [String]
-  var contact: Contact
-  let publishedAt: String?
-  let distance: Double?
-  var ranking: Int? = 0
-  
-  var picture: URL? {
-    photos.first?.medium ?? photos.first?.large
-  }
-}
+@testable import PetSave
 
-extension Animal: Identifiable {
+struct APIManagerMock: APIManagerProtocol {
+  func perform(_ request: PetSave.RequestProtocol, authToken: String) async throws -> Data {
+    return try Data(contentsOf: URL(fileURLWithPath: request.path), options: .mappedIfSafe)
+  }
+  
+  func requestToken() async throws -> Data {
+    return Data(AccessTokenTestHelper.generateValidToken().utf8)
+  }
 }
