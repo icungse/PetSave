@@ -39,8 +39,8 @@ struct PersistenceController {
     let result = PersistenceController(inMemory: true)
     let viewContext = result.container.viewContext
     for i in 0..<10 {
-      let newItem = Item(context: viewContext)
-      newItem.timestamp = Date()
+      var animal = Animal.mock[i]
+      animal.toManagedObject(context: viewContext)
     }
     do {
       try viewContext.save()
@@ -51,10 +51,10 @@ struct PersistenceController {
     return result
   }()
 
-  let container: NSPersistentContainer
+  let container: NSPersistentCloudKitContainer
 
   init(inMemory: Bool = false) {
-    container = NSPersistentContainer(name: "PetSave")
+    container = NSPersistentCloudKitContainer(name: "PetSave")
     if inMemory {
       container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
     }
@@ -65,5 +65,22 @@ struct PersistenceController {
     }
     container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     container.viewContext.automaticallyMergesChangesFromParent = true
+  }
+  
+  static func save() {
+    let context = PersistenceController.shared.container.viewContext
+    guard context.hasChanges else {
+      return
+    }
+    
+    do {
+      try context.save()
+    } catch {
+      fatalError("""
+          \(#file), \
+          \(#function), \
+          \(error.localizedDescription)
+        """)
+    }
   }
 }
