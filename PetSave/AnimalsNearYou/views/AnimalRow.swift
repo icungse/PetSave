@@ -34,6 +34,14 @@ import SwiftUI
 
 struct AnimalRow: View {
   let animal: AnimalEntity
+  
+  var animalType: String {
+    animal.type ?? ""
+  }
+  
+  var animalBreedAndType: String {
+    "\(animal.breed) \(animalType)"
+  }
 
   var body: some View {
     HStack {
@@ -59,6 +67,29 @@ struct AnimalRow: View {
         Text(animal.name ?? "No Name Available")
           .multilineTextAlignment(.center)
           .font(.title3)
+        Text(animalBreedAndType)
+          .font(.callout)
+        
+        if let description = animal.desc {
+          Text(description)
+            .lineLimit(2)
+            .font(.footnote)
+        }
+        
+        HStack {
+          Text(animal.age.rawValue)
+            .modifier(
+              AnimalAttributesCard(
+                color: animal.age.color
+              )
+            )
+          Text(animal.gender.rawValue)
+            .modifier(
+              AnimalAttributesCard(
+                color: .pink
+              )
+            )
+        }
       }
       .lineLimit(1)
     }
