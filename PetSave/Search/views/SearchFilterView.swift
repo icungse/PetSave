@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,59 +32,62 @@
 
 import SwiftUI
 
-struct AnimalsNearYouView: View {
-  @FetchRequest(
-    sortDescriptors: [
-      NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
-    ],
-    animation: .default
-  )
-  private var animals: FetchedResults<AnimalEntity>
-  
-  @ObservedObject var viewModel: AnimalsNearYouViewModel
+struct SearchFilterView: View {
+  @Environment(\.dismiss) private var dismiss
+  @ObservedObject var viewModel: SearchViewModel
   
   var body: some View {
-    NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
+    Form {
+      Section {
+        Picker("Age", selection: $viewModel.ageSelection) {
+          ForEach(AnimalSearchAge.allCases, id: \.self) { age in
+            Text(age.rawValue.capitalized)
           }
         }
+        .onChange(of: viewModel.ageSelection) { _ in
+          viewModel.search()
+        }
         
-        if !animals.isEmpty && viewModel.hasMoreAnimals {
-          ProgressView("Finding more animals...")
-            .padding()
-            .frame(maxWidth: .infinity)
-            .task {
-              await viewModel.fetchAnimals()
-            }
+        Picker("Type", selection: $viewModel.typeSelection) {
+          ForEach(AnimalSearchType.allCases, id: \.self) { type in
+            Text(type.rawValue.capitalized)
+          }
+        }
+        .onChange(of: viewModel.typeSelection) { _ in
+          viewModel.search()
+        }
+      } footer: {
+        Text("You can mix both, age and type, to make a more accurate search.")
+      }
+      
+      Button("Clear", role: .destructive, action: viewModel.clearFilters)
+      Button("Done") {
+        dismiss()
+      }
+    }
+    .navigationBarTitle("Filters")
+    .toolbar {
+      ToolbarItem {
+        Button {
+          dismiss()
+        } label: {
+          Label("Close", systemImage: "xmark.circle.fill")
         }
       }
-      .task {
-        await viewModel.fetchAnimals()
-      }
-      .listStyle(.plain)
-      .navigationTitle("Animals near you")
-      .overlay {
-        if viewModel.isLoading && animals.isEmpty {
-          ProgressView("Finding Animals near you...")
-        }
-      }
-    }.navigationViewStyle(StackNavigationViewStyle())
+    }
   }
 }
 
-struct AnimalsNearYouView_Previews: PreviewProvider {
+struct SearchFilterView_Previews: PreviewProvider {
   static var previews: some View {
-    AnimalsNearYouView(
-      viewModel: AnimalsNearYouViewModel(
-        animalFetcher: AnimalsFetcherMock(),
-        animalStore: AnimalStoreService(
-          context: CoreDataHelper.previewContext
+    let context = PersistenceController.preview.container.viewContext
+    NavigationView {
+      SearchFilterView(
+        viewModel: SearchViewModel(
+          animalSearcher: AnimalSearcherMock(),
+          animalStore: AnimalStoreService(context: context)
         )
       )
-    )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
   }
 }

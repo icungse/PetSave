@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,61 +30,56 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-struct AnimalsNearYouView: View {
-  @FetchRequest(
-    sortDescriptors: [
-      NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
-    ],
-    animation: .default
-  )
-  private var animals: FetchedResults<AnimalEntity>
-  
-  @ObservedObject var viewModel: AnimalsNearYouViewModel
-  
-  var body: some View {
-    NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
-          }
-        }
-        
-        if !animals.isEmpty && viewModel.hasMoreAnimals {
-          ProgressView("Finding more animals...")
-            .padding()
-            .frame(maxWidth: .infinity)
-            .task {
-              await viewModel.fetchAnimals()
-            }
-        }
-      }
-      .task {
-        await viewModel.fetchAnimals()
-      }
-      .listStyle(.plain)
-      .navigationTitle("Animals near you")
-      .overlay {
-        if viewModel.isLoading && animals.isEmpty {
-          ProgressView("Finding Animals near you...")
-        }
-      }
-    }.navigationViewStyle(StackNavigationViewStyle())
-  }
+protocol AnimalSearcher {
+  func searchAnimal(
+    by text: String,
+    age: AnimalSearchAge,
+    type: AnimalSearchType
+  ) async -> [Animal]
 }
 
-struct AnimalsNearYouView_Previews: PreviewProvider {
-  static var previews: some View {
-    AnimalsNearYouView(
-      viewModel: AnimalsNearYouViewModel(
-        animalFetcher: AnimalsFetcherMock(),
-        animalStore: AnimalStoreService(
-          context: CoreDataHelper.previewContext
-        )
+final class SearchViewModel: ObservableObject {
+  @Published var searchText = ""
+  @Published var ageSelection = AnimalSearchAge.none
+  @Published var typeSelection = AnimalSearchType.none
+  
+  private let animalSearcher: AnimalSearcher
+  private let animalStore: AnimalStore
+  
+  var shouldFilter: Bool {
+    !searchText.isEmpty || ageSelection != .none || typeSelection != .none
+  }
+  
+  init(animalSearcher: AnimalSearcher, animalStore: AnimalStore) {
+    self.animalSearcher = animalSearcher
+    self.animalStore = animalStore
+  }
+  
+  func search() {
+    Task {
+      let animals = await animalSearcher.searchAnimal(
+        by: searchText,
+        age: ageSelection,
+        type: typeSelection
       )
-    )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+      
+      do {
+        try await animalStore.save(animals: animals)
+      } catch {
+        print("Error storing animals... \(error.localizedDescription)")
+      }
+    }
+  }
+  
+  func selectTypeSuggestion(_ type: AnimalSearchType) {
+    typeSelection = type
+    search()
+  }
+  
+  func clearFilters() {
+    typeSelection = .none
+    ageSelection = .none
   }
 }

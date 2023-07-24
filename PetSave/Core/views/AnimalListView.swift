@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,59 +32,47 @@
 
 import SwiftUI
 
-struct AnimalsNearYouView: View {
-  @FetchRequest(
-    sortDescriptors: [
-      NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
-    ],
-    animation: .default
-  )
-  private var animals: FetchedResults<AnimalEntity>
+struct AnimalListView<Context, Data>: View where Context: View, Data: RandomAccessCollection, Data.Element: AnimalEntity {
+  let animals: Data
+  let footer: Context
   
-  @ObservedObject var viewModel: AnimalsNearYouViewModel
+  init(animals: Data, @ViewBuilder footer: () -> Context) {
+    self.animals = animals
+    self.footer = footer()
+  }
+  
+  init(animals: Data) where Context == EmptyView {
+    self.init(animals: animals) {
+      EmptyView()
+    }
+  }
   
   var body: some View {
-    NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
-          }
-        }
-        
-        if !animals.isEmpty && viewModel.hasMoreAnimals {
-          ProgressView("Finding more animals...")
-            .padding()
-            .frame(maxWidth: .infinity)
-            .task {
-              await viewModel.fetchAnimals()
-            }
+    List {
+      ForEach(animals) { animal in
+        NavigationLink(destination: AnimalDetailsView()) {
+          AnimalRow(animal: animal)
         }
       }
-      .task {
-        await viewModel.fetchAnimals()
-      }
-      .listStyle(.plain)
-      .navigationTitle("Animals near you")
-      .overlay {
-        if viewModel.isLoading && animals.isEmpty {
-          ProgressView("Finding Animals near you...")
-        }
-      }
-    }.navigationViewStyle(StackNavigationViewStyle())
+      
+      footer
+    }
+    .listStyle(.plain)
   }
 }
 
-struct AnimalsNearYouView_Previews: PreviewProvider {
+struct AnimalListView_Previews: PreviewProvider {
   static var previews: some View {
-    AnimalsNearYouView(
-      viewModel: AnimalsNearYouViewModel(
-        animalFetcher: AnimalsFetcherMock(),
-        animalStore: AnimalStoreService(
-          context: CoreDataHelper.previewContext
-        )
+    NavigationView {
+      AnimalListView(
+        animals: CoreDataHelper.getTestAnimalEntities() ?? []
       )
-    )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+    
+    NavigationView {
+      AnimalListView(animals: []) {
+        Text("This is a footer")
+      }
+    }
   }
 }

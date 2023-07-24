@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -32,59 +32,34 @@
 
 import SwiftUI
 
-struct AnimalsNearYouView: View {
-  @FetchRequest(
-    sortDescriptors: [
-      NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
-    ],
-    animation: .default
-  )
-  private var animals: FetchedResults<AnimalEntity>
+struct FilterAnimals {
+  let animals: FetchedResults<AnimalEntity>
+  let query: String
+  let age: AnimalSearchAge
+  let type: AnimalSearchType
   
-  @ObservedObject var viewModel: AnimalsNearYouViewModel
-  
-  var body: some View {
-    NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
-          }
-        }
-        
-        if !animals.isEmpty && viewModel.hasMoreAnimals {
-          ProgressView("Finding more animals...")
-            .padding()
-            .frame(maxWidth: .infinity)
-            .task {
-              await viewModel.fetchAnimals()
-            }
-        }
+  func callAsFunction() -> [AnimalEntity] {
+    let ageText = age.rawValue.lowercased()
+    let typeText = type.rawValue.lowercased()
+    
+    return animals.filter {
+      if ageText != "none" {
+        return $0.age.rawValue.lowercased() == ageText
       }
-      .task {
-        await viewModel.fetchAnimals()
+      return true
+    }
+    .filter {
+      if typeText != "none" {
+        return $0.type?.lowercased() == typeText
       }
-      .listStyle(.plain)
-      .navigationTitle("Animals near you")
-      .overlay {
-        if viewModel.isLoading && animals.isEmpty {
-          ProgressView("Finding Animals near you...")
-        }
+      return true
+    }
+    .filter {
+      if query.isEmpty {
+        return true
       }
-    }.navigationViewStyle(StackNavigationViewStyle())
+      return $0.name?.contains(query) ?? false
+    }
   }
 }
 
-struct AnimalsNearYouView_Previews: PreviewProvider {
-  static var previews: some View {
-    AnimalsNearYouView(
-      viewModel: AnimalsNearYouViewModel(
-        animalFetcher: AnimalsFetcherMock(),
-        animalStore: AnimalStoreService(
-          context: CoreDataHelper.previewContext
-        )
-      )
-    )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-  }
-}

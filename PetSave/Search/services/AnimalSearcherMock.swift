@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,61 +30,23 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
-
-struct AnimalsNearYouView: View {
-  @FetchRequest(
-    sortDescriptors: [
-      NSSortDescriptor(keyPath: \AnimalEntity.timestamp, ascending: true)
-    ],
-    animation: .default
-  )
-  private var animals: FetchedResults<AnimalEntity>
-  
-  @ObservedObject var viewModel: AnimalsNearYouViewModel
-  
-  var body: some View {
-    NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
-          }
-        }
-        
-        if !animals.isEmpty && viewModel.hasMoreAnimals {
-          ProgressView("Finding more animals...")
-            .padding()
-            .frame(maxWidth: .infinity)
-            .task {
-              await viewModel.fetchAnimals()
-            }
-        }
+struct AnimalSearcherMock: AnimalSearcher {
+  func searchAnimal(
+    by text: String,
+    age: AnimalSearchAge,
+    type: AnimalSearchType
+  ) async -> [Animal] {
+    var animals = Animal.mock
+    if age != .none {
+      animals = animals.filter {
+        $0.age.rawValue.lowercased() == age.rawValue.lowercased()
       }
-      .task {
-        await viewModel.fetchAnimals()
+    }
+    if type != .none {
+      animals = animals.filter {
+        $0.type.lowercased() == type.rawValue.lowercased()
       }
-      .listStyle(.plain)
-      .navigationTitle("Animals near you")
-      .overlay {
-        if viewModel.isLoading && animals.isEmpty {
-          ProgressView("Finding Animals near you...")
-        }
-      }
-    }.navigationViewStyle(StackNavigationViewStyle())
-  }
-}
-
-struct AnimalsNearYouView_Previews: PreviewProvider {
-  static var previews: some View {
-    AnimalsNearYouView(
-      viewModel: AnimalsNearYouViewModel(
-        animalFetcher: AnimalsFetcherMock(),
-        animalStore: AnimalStoreService(
-          context: CoreDataHelper.previewContext
-        )
-      )
-    )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+    return animals.filter { $0.name.contains(text) }
   }
 }
