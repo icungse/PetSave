@@ -87,6 +87,13 @@
 		FE49B8002A6CEF57006F0A11 /* AnimalStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49B7FF2A6CEF57006F0A11 /* AnimalStoreService.swift */; };
 		FE49B8022A6D2102006F0A11 /* AnimalAttributesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49B8012A6D2102006F0A11 /* AnimalAttributesCard.swift */; };
 		FE49B8052A6D2254006F0A11 /* AnimalsNearYouViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE49B8042A6D2254006F0A11 /* AnimalsNearYouViewModelTestCase.swift */; };
+		FE527F102A6D5A0700F278AC /* AnimalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F0F2A6D5A0700F278AC /* AnimalListView.swift */; };
+		FE527F152A6D8FA300F278AC /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F142A6D8FA300F278AC /* SearchViewModel.swift */; };
+		FE527F182A6D8FEE00F278AC /* AnimalSearcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F172A6D8FEE00F278AC /* AnimalSearcherService.swift */; };
+		FE527F1A2A6D949200F278AC /* AnimalSearcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F192A6D949200F278AC /* AnimalSearcherMock.swift */; };
+		FE527F1E2A6DA1A900F278AC /* SearchFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */; };
+		FE527F202A6DABDE00F278AC /* FilterAnimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */; };
+		FE527F242A6E4C9200F278AC /* SearchViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +198,13 @@
 		FE49B7FF2A6CEF57006F0A11 /* AnimalStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalStoreService.swift; sourceTree = "<group>"; };
 		FE49B8012A6D2102006F0A11 /* AnimalAttributesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalAttributesCard.swift; sourceTree = "<group>"; };
 		FE49B8042A6D2254006F0A11 /* AnimalsNearYouViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsNearYouViewModelTestCase.swift; sourceTree = "<group>"; };
+		FE527F0F2A6D5A0700F278AC /* AnimalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalListView.swift; sourceTree = "<group>"; };
+		FE527F142A6D8FA300F278AC /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		FE527F172A6D8FEE00F278AC /* AnimalSearcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalSearcherService.swift; sourceTree = "<group>"; };
+		FE527F192A6D949200F278AC /* AnimalSearcherMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalSearcherMock.swift; sourceTree = "<group>"; };
+		FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterView.swift; sourceTree = "<group>"; };
+		FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAnimals.swift; sourceTree = "<group>"; };
+		FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +340,7 @@
 		AE5EA14526AC9AE300895E34 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FE527F222A6E4C8100F278AC /* Search */,
 				FE49B8032A6D2242006F0A11 /* AnimalsNearYou */,
 				847F4A0126D7549300B94FB8 /* Core */,
 			);
@@ -345,6 +360,8 @@
 		AE6A376C269A866A0054C842 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				FE527F162A6D8FDE00F278AC /* services */,
+				FE527F132A6D8F9B00F278AC /* viewModels */,
 				8485B72526A4A398001874CB /* models */,
 				AE6A3771269B54BC0054C842 /* views */,
 			);
@@ -354,6 +371,7 @@
 		AE6A376D269A885E0054C842 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				FE527F0E2A6D59FC00F278AC /* views */,
 				AE6A3775269B56010054C842 /* data */,
 				AE6A3776269B56100054C842 /* domain */,
 				AE6A3778269B561F0054C842 /* utils */,
@@ -378,6 +396,7 @@
 				845137A52796247E00A4DA57 /* EmptyResultsView.swift */,
 				845137A32796247E00A4DA57 /* SuggestionsGrid.swift */,
 				AE6A3781269B57940054C842 /* SearchView.swift */,
+				FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -637,6 +656,40 @@
 			path = AnimalsNearYou;
 			sourceTree = "<group>";
 		};
+		FE527F0E2A6D59FC00F278AC /* views */ = {
+			isa = PBXGroup;
+			children = (
+				FE527F0F2A6D5A0700F278AC /* AnimalListView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		FE527F132A6D8F9B00F278AC /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FE527F142A6D8FA300F278AC /* SearchViewModel.swift */,
+				FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		FE527F162A6D8FDE00F278AC /* services */ = {
+			isa = PBXGroup;
+			children = (
+				FE527F172A6D8FEE00F278AC /* AnimalSearcherService.swift */,
+				FE527F192A6D949200F278AC /* AnimalSearcherMock.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		FE527F222A6E4C8100F278AC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -814,6 +867,9 @@
 				FE1F8BF72A693F4300451F45 /* RequestManager.swift in Sources */,
 				AE6A3795269B59C20054C842 /* PetSave.xcdatamodeld in Sources */,
 				FE1F8C252A6A669F00451F45 /* APIColors+CoreData.swift in Sources */,
+				FE527F1E2A6DA1A900F278AC /* SearchFilterView.swift in Sources */,
+				FE527F1A2A6D949200F278AC /* AnimalSearcherMock.swift in Sources */,
+				FE527F102A6D5A0700F278AC /* AnimalListView.swift in Sources */,
 				84A59F74269E8C4700237A83 /* PhotoSizes.swift in Sources */,
 				AE6A380C269B5D9E0054C842 /* Age.swift in Sources */,
 				FE49B7F92A6BFD53006F0A11 /* AnimalsNearYouViewModel.swift in Sources */,
@@ -851,14 +907,17 @@
 				FE1F8C0A2A699E0900451F45 /* AccessTokenManager.swift in Sources */,
 				8472DFCC26BF93B3000FEDAF /* AnimalsNearYouView.swift in Sources */,
 				FE1F8C032A69695200451F45 /* AnimalsRequest.swift in Sources */,
+				FE527F182A6D8FEE00F278AC /* AnimalSearcherService.swift in Sources */,
 				84A59F7C269E92F800237A83 /* APIColors.swift in Sources */,
 				AE6A380E269B5DA90054C842 /* Breed.swift in Sources */,
 				FE49B7FC2A6C6552006F0A11 /* FetchAnimalsService.swift in Sources */,
 				FE1F8C0C2A699E5000451F45 /* AppUserDefaultsKeys.swift in Sources */,
 				84A59F76269E8DF000237A83 /* VideoLink.swift in Sources */,
 				84B0507426B0E45000E0A709 /* AnimalLocationView.swift in Sources */,
+				FE527F152A6D8FA300F278AC /* SearchViewModel.swift in Sources */,
 				FE1F8C2B2A6AC77C00451F45 /* AnimalEnvironment+CoreData.swift in Sources */,
 				845137A62796247E00A4DA57 /* SuggestionsGrid.swift in Sources */,
+				FE527F202A6DABDE00F278AC /* FilterAnimals.swift in Sources */,
 				AE6A3814269B5DC20054C842 /* Details.swift in Sources */,
 				84B0507026B0E2EB00E0A709 /* AnimalDetailRow.swift in Sources */,
 				8485B72726A4A3AB001874CB /* AnimalSearchType.swift in Sources */,
@@ -878,6 +937,7 @@
 				847F4A0626D754D400B94FB8 /* CoreDataTests.swift in Sources */,
 				FE1F8C162A69A4E100451F45 /* AnimalsRequestMock.swift in Sources */,
 				FE49B8052A6D2254006F0A11 /* AnimalsNearYouViewModelTestCase.swift in Sources */,
+				FE527F242A6E4C9200F278AC /* SearchViewModelTestCase.swift in Sources */,
 				FE1F8C1A2A69A8B200451F45 /* AccessTokenManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
