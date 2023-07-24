@@ -94,6 +94,9 @@
 		FE527F1E2A6DA1A900F278AC /* SearchFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */; };
 		FE527F202A6DABDE00F278AC /* FilterAnimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */; };
 		FE527F242A6E4C9200F278AC /* SearchViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */; };
+		FEAEC6A12A6E632E009EF003 /* PetSaveOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */; };
+		FEAEC6A22A6E632E009EF003 /* PetSaveOnboarding.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FEAEC6C62A6E8930009EF003 /* PetSaveOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = FEAEC6C52A6E8930009EF003 /* PetSaveOnboarding */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,7 +114,28 @@
 			remoteGlobalIDString = 18D775BC22AD944300AE281E;
 			remoteInfo = PetSave;
 		};
+		FEAEC69F2A6E632E009EF003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18D775B522AD944300AE281E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FEAEC69A2A6E632E009EF003;
+			remoteInfo = PetSaveOnboarding;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FEAEC6A32A6E632F009EF003 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEAEC6A22A6E632E009EF003 /* PetSaveOnboarding.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1839F4AF25190F2A00BB00F1 /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
@@ -205,6 +229,7 @@
 		FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterView.swift; sourceTree = "<group>"; };
 		FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAnimals.swift; sourceTree = "<group>"; };
 		FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTestCase.swift; sourceTree = "<group>"; };
+		FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PetSaveOnboarding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEAEC6C62A6E8930009EF003 /* PetSaveOnboarding in Frameworks */,
+				FEAEC6A12A6E632E009EF003 /* PetSaveOnboarding.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +250,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AE6A37FF269B5C050054C842 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAEC6982A6E632E009EF003 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -250,6 +284,7 @@
 				18D775BD22AD944300AE281E /* PetSave.app */,
 				AE6A37F5269B5B850054C842 /* PetSaveTests.xctest */,
 				AE6A3802269B5C050054C842 /* PetSaveUITests.xctest */,
+				FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -692,6 +727,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		FEAEC6962A6E632E009EF003 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		18D775BC22AD944300AE281E /* PetSave */ = {
 			isa = PBXNativeTarget;
@@ -701,13 +746,16 @@
 				18D775B922AD944300AE281E /* Sources */,
 				18D775BA22AD944300AE281E /* Frameworks */,
 				18D775BB22AD944300AE281E /* Resources */,
+				FEAEC6A32A6E632F009EF003 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FEAEC6A02A6E632E009EF003 /* PBXTargetDependency */,
 			);
 			name = PetSave;
 			packageProductDependencies = (
+				FEAEC6C52A6E8930009EF003 /* PetSaveOnboarding */,
 			);
 			productName = MyRWTutorial;
 			productReference = 18D775BD22AD944300AE281E /* PetSave.app */;
@@ -749,6 +797,24 @@
 			productReference = AE6A3802269B5C050054C842 /* PetSaveUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		FEAEC69A2A6E632E009EF003 /* PetSaveOnboarding */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEAEC6A72A6E632F009EF003 /* Build configuration list for PBXNativeTarget "PetSaveOnboarding" */;
+			buildPhases = (
+				FEAEC6962A6E632E009EF003 /* Headers */,
+				FEAEC6972A6E632E009EF003 /* Sources */,
+				FEAEC6982A6E632E009EF003 /* Frameworks */,
+				FEAEC6992A6E632E009EF003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PetSaveOnboarding;
+			productName = PetSaveOnboarding;
+			productReference = FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -771,6 +837,10 @@
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = 18D775BC22AD944300AE281E;
 					};
+					FEAEC69A2A6E632E009EF003 = {
+						CreatedOnToolsVersion = 14.3;
+						LastSwiftMigration = 1430;
+					};
 				};
 			};
 			buildConfigurationList = 18D775B822AD944300AE281E /* Build configuration list for PBXProject "PetSave" */;
@@ -784,6 +854,7 @@
 			);
 			mainGroup = 18D775B422AD944300AE281E;
 			packageReferences = (
+				FEAEC6C42A6E8930009EF003 /* XCRemoteSwiftPackageReference "PetSaveOnboarding" */,
 			);
 			productRefGroup = 18D775BE22AD944300AE281E /* Products */;
 			projectDirPath = "";
@@ -792,6 +863,7 @@
 				18D775BC22AD944300AE281E /* PetSave */,
 				AE6A37F4269B5B850054C842 /* PetSaveTests */,
 				AE6A3801269B5C050054C842 /* PetSaveUITests */,
+				FEAEC69A2A6E632E009EF003 /* PetSaveOnboarding */,
 			);
 		};
 /* End PBXProject section */
@@ -817,6 +889,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AE6A3800269B5C050054C842 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEAEC6992A6E632E009EF003 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -950,6 +1029,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FEAEC6972A6E632E009EF003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -962,6 +1048,11 @@
 			isa = PBXTargetDependency;
 			target = 18D775BC22AD944300AE281E /* PetSave */;
 			targetProxy = AE6A3806269B5C050054C842 /* PBXContainerItemProxy */;
+		};
+		FEAEC6A02A6E632E009EF003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FEAEC69A2A6E632E009EF003 /* PetSaveOnboarding */;
+			targetProxy = FEAEC69F2A6E632E009EF003 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1375,6 +1466,116 @@
 			};
 			name = Release;
 		};
+		FEAEC6A42A6E632F009EF003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Ray Wenderlich. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = icung.PetSaveOnboarding;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FEAEC6A52A6E632F009EF003 /* Debug (Core Data) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Ray Wenderlich. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = icung.PetSaveOnboarding;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug (Core Data)";
+		};
+		FEAEC6A62A6E632F009EF003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Ray Wenderlich. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = icung.PetSaveOnboarding;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1418,7 +1619,36 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		FEAEC6A72A6E632F009EF003 /* Build configuration list for PBXNativeTarget "PetSaveOnboarding" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEAEC6A42A6E632F009EF003 /* Debug */,
+				FEAEC6A52A6E632F009EF003 /* Debug (Core Data) */,
+				FEAEC6A62A6E632F009EF003 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FEAEC6C42A6E8930009EF003 /* XCRemoteSwiftPackageReference "PetSaveOnboarding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icungse/PetSaveOnboarding";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FEAEC6C52A6E8930009EF003 /* PetSaveOnboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEAEC6C42A6E8930009EF003 /* XCRemoteSwiftPackageReference "PetSaveOnboarding" */;
+			productName = PetSaveOnboarding;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		AE6A3793269B59C10054C842 /* PetSave.xcdatamodeld */ = {
