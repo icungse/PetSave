@@ -52,17 +52,10 @@ struct AnimalListView<Context, Data>: View where Context: View, Data: RandomAcce
   
   var body: some View {
     List {
-      Button(navigationState.isNavigatingDisabled ? "Enable Navigation" : "Disable Navigation") {
-        navigationState.isNavigatingDisabled.toggle()
-      }
       ForEach(animals) { animal in
-        router.navigate(
-          data: animal,
-          navigationState: navigationState
-        ) {
+        NavigationLink(destination: AnimalDetailsView(animal: animal)) {
           AnimalRow(animal: animal)
         }
-        .disabled(navigationState.isNavigatingDisabled)
       }
       
       footer
