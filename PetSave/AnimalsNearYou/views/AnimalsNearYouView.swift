@@ -45,19 +45,13 @@ struct AnimalsNearYouView: View {
   
   var body: some View {
     NavigationView {
-      List {
-        ForEach(animals) { animal in
-          NavigationLink(destination: AnimalDetailRow()) {
-            AnimalRow(animal: animal)
-          }
-        }
-        
+      AnimalListView(animals: animals) {
         if !animals.isEmpty && viewModel.hasMoreAnimals {
           ProgressView("Finding more animals...")
             .padding()
             .frame(maxWidth: .infinity)
             .task {
-              await viewModel.fetchAnimals()
+              await viewModel.fetchMoreAnimals()
             }
         }
       }
@@ -85,6 +79,10 @@ struct AnimalsNearYouView_Previews: PreviewProvider {
         )
       )
     )
-      .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
   }
+}
+
+class NavigationState: ObservableObject {
+  @Published var isNavigatingDisabled = false
 }

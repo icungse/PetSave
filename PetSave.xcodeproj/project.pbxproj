@@ -94,9 +94,15 @@
 		FE527F1E2A6DA1A900F278AC /* SearchFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */; };
 		FE527F202A6DABDE00F278AC /* FilterAnimals.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */; };
 		FE527F242A6E4C9200F278AC /* SearchViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */; };
+		FEA60D502A6FB32700833C31 /* PetSaveTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA60D4F2A6FB32700833C31 /* PetSaveTabType.swift */; };
+		FEA60D522A6FB35D00833C31 /* PetSaveTabNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA60D512A6FB35D00833C31 /* PetSaveTabNavigator.swift */; };
 		FEAEC6A12A6E632E009EF003 /* PetSaveOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */; };
 		FEAEC6A22A6E632E009EF003 /* PetSaveOnboarding.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FEAEC6C62A6E8930009EF003 /* PetSaveOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = FEAEC6C52A6E8930009EF003 /* PetSaveOnboarding */; };
+		FEAEC6C82A6EFFC7009EF003 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAEC6C72A6EFFC7009EF003 /* NavigationRouter.swift */; };
+		FEAEC6CA2A6F03A5009EF003 /* AnimalDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEAEC6C92A6F03A5009EF003 /* AnimalDetailsViewController.xib */; };
+		FEAEC6CC2A6F03C7009EF003 /* AnimalDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAEC6CB2A6F03C7009EF003 /* AnimalDetailsViewController.swift */; };
+		FEAEC6CE2A6F0574009EF003 /* AnimalDetailsViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAEC6CD2A6F0574009EF003 /* AnimalDetailsViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,7 +235,13 @@
 		FE527F1D2A6DA1A900F278AC /* SearchFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterView.swift; sourceTree = "<group>"; };
 		FE527F1F2A6DABDE00F278AC /* FilterAnimals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAnimals.swift; sourceTree = "<group>"; };
 		FE527F232A6E4C9200F278AC /* SearchViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTestCase.swift; sourceTree = "<group>"; };
+		FEA60D4F2A6FB32700833C31 /* PetSaveTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetSaveTabType.swift; sourceTree = "<group>"; };
+		FEA60D512A6FB35D00833C31 /* PetSaveTabNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetSaveTabNavigator.swift; sourceTree = "<group>"; };
 		FEAEC69B2A6E632E009EF003 /* PetSaveOnboarding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PetSaveOnboarding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEAEC6C72A6EFFC7009EF003 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		FEAEC6C92A6F03A5009EF003 /* AnimalDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimalDetailsViewController.xib; sourceTree = "<group>"; };
+		FEAEC6CB2A6F03C7009EF003 /* AnimalDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailsViewController.swift; sourceTree = "<group>"; };
+		FEAEC6CD2A6F0574009EF003 /* AnimalDetailsViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailsViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +380,9 @@
 				84B0507726B0E8F500E0A709 /* AnimalContactLink.swift */,
 				84B0507326B0E45000E0A709 /* AnimalLocationView.swift */,
 				8472150726C1EC33001FD40B /* AnimalHeaderView.swift */,
+				FEAEC6C92A6F03A5009EF003 /* AnimalDetailsViewController.xib */,
+				FEAEC6CB2A6F03C7009EF003 /* AnimalDetailsViewController.swift */,
+				FEAEC6CD2A6F0574009EF003 /* AnimalDetailsViewRepresentable.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -459,6 +474,7 @@
 				84B0507B26B0EFA800E0A709 /* AddressFetcher.swift */,
 				8472DFAA26BF66EF000FEDAF /* LocationManager.swift */,
 				FE1F8C0B2A699E5000451F45 /* AppUserDefaultsKeys.swift */,
+				FEAEC6C72A6EFFC7009EF003 /* NavigationRouter.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -695,6 +711,8 @@
 			isa = PBXGroup;
 			children = (
 				FE527F0F2A6D5A0700F278AC /* AnimalListView.swift */,
+				FEA60D4F2A6FB32700833C31 /* PetSaveTabType.swift */,
+				FEA60D512A6FB35D00833C31 /* PetSaveTabNavigator.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -873,6 +891,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEAEC6CA2A6F03A5009EF003 /* AnimalDetailsViewController.xib in Resources */,
 				18D775D822AD963800AE281E /* LaunchScreen.storyboard in Resources */,
 				18D775CA22AD944400AE281E /* Preview Assets.xcassets in Resources */,
 				18D775C722AD944400AE281E /* Assets.xcassets in Resources */,
@@ -934,20 +953,24 @@
 				AE6A381C269B5DF20054C842 /* Size.swift in Sources */,
 				FE1F8BEB2A6831C400451F45 /* AnimalsMock.swift in Sources */,
 				FE1F8BFA2A69403900451F45 /* DataParser.swift in Sources */,
+				FEA60D502A6FB32700833C31 /* PetSaveTabType.swift in Sources */,
 				AE6A3782269B57940054C842 /* SearchView.swift in Sources */,
 				845137A72796247E00A4DA57 /* AnimalTypeSuggestionView.swift in Sources */,
 				FE1F8C2D2A6AC80600451F45 /* PhotoSizes+CoreData.swift in Sources */,
 				FE49B8002A6CEF57006F0A11 /* AnimalStoreService.swift in Sources */,
 				847F49F626D3403B00B94FB8 /* APIConstants.swift in Sources */,
+				FEA60D522A6FB35D00833C31 /* PetSaveTabNavigator.swift in Sources */,
 				84A59F78269E906400237A83 /* AnimalAttributes.swift in Sources */,
 				FE1F8BF52A693DB100451F45 /* APIManager.swift in Sources */,
 				FE1F8C002A69627600451F45 /* APIToken.swift in Sources */,
+				FEAEC6C82A6EFFC7009EF003 /* NavigationRouter.swift in Sources */,
 				FE1F8C052A696A3100451F45 /* AnimalsContainer.swift in Sources */,
 				FE1F8BF72A693F4300451F45 /* RequestManager.swift in Sources */,
 				AE6A3795269B59C20054C842 /* PetSave.xcdatamodeld in Sources */,
 				FE1F8C252A6A669F00451F45 /* APIColors+CoreData.swift in Sources */,
 				FE527F1E2A6DA1A900F278AC /* SearchFilterView.swift in Sources */,
 				FE527F1A2A6D949200F278AC /* AnimalSearcherMock.swift in Sources */,
+				FEAEC6CC2A6F03C7009EF003 /* AnimalDetailsViewController.swift in Sources */,
 				FE527F102A6D5A0700F278AC /* AnimalListView.swift in Sources */,
 				84A59F74269E8C4700237A83 /* PhotoSizes.swift in Sources */,
 				AE6A380C269B5D9E0054C842 /* Age.swift in Sources */,
@@ -978,6 +1001,7 @@
 				FE1F8C292A6A66E300451F45 /* Address+CoreData.swift in Sources */,
 				FE1F8C1F2A6A5CA300451F45 /* CoreDataPersistable.swift in Sources */,
 				FE49B7FE2A6C6782006F0A11 /* AnimalsFetcherMock.swift in Sources */,
+				FEAEC6CE2A6F0574009EF003 /* AnimalDetailsViewRepresentable.swift in Sources */,
 				FE1F8C2F2A6AC82500451F45 /* VIdeoLink+CoreData.swift in Sources */,
 				8472150826C1EC33001FD40B /* AnimalHeaderView.swift in Sources */,
 				8FDD2CA326B311AC00DBE33F /* Pagination.swift in Sources */,
