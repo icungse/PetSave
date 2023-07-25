@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,47 +31,84 @@
 /// THE SOFTWARE.
 
 import SwiftUI
-import MapKit
 
-struct AnimalLocationView: View {
-  let animal: AnimalEntity
+struct PetRankingView: View {
+  @ObservedObject var viewModel: PetRankingViewModel
+  var animal: AnimalEntity
   
-  @StateObject var addressFetcher = AddressFetcher()
-  
-  var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      Text("Location")
-        .font(.headline)
-      
-      Text(animal.address)
-        .font(.subheadline)
-        .textSelection(.enabled)
-      
-      Button(action: openAddressInMaps) {
-        Map(coordinateRegion: $addressFetcher.coordinates, interactionModes: [])
-      }
-      .buttonStyle(.plain)
-      .frame(height: 200)
-      .cornerRadius(16)
-      .task {
-        await addressFetcher.search(by: animal.address)
-      }
-    }
+  init(animal: AnimalEntity) {
+    self.animal = animal
+    viewModel = PetRankingViewModel(animal: animal)
   }
   
-  func openAddressInMaps() {
-    let placemark = MKPlacemark(coordinate: addressFetcher.coordinates.center)
-    let mapItem = MKMapItem(placemark: placemark)
-    mapItem.openInMaps(launchOptions: nil)
+  var body: some View {
+    HStack {
+      Text("Rank me!")
+        .multilineTextAlignment(.center)
+      ForEach(0...4, id: \.self) { index in
+        PetRankImage(index: index, recentIndex: $viewModel.ranking)
+      }
+    }
   }
 }
 
-struct AnimalLocationView_Previews: PreviewProvider {
+
+struct PetRankingView_Previews: PreviewProvider {
   static var previews: some View {
     if let animal = CoreDataHelper.getTestAnimalEntity() {
-      AnimalLocationView(animal: animal)
+      PetRankingView(animal: animal)
         .padding()
         .previewLayout(.sizeThatFits)
     }
+  }
+}
+
+
+struct PetRankImage: View {
+  let index: Int
+  
+  @State var opacity: Double = 0.4
+  @State var tapped = false
+  @Binding var recentIndex: Int
+
+  var body: some View {
+    Image("creature_dog-and-bone")
+      .resizable()
+      .aspectRatio(contentMode: .fit)
+      .opacity(opacity)
+      .frame(width: 50, height: 50)
+      .onTapGesture {
+        opacity = tapped ? 0.4 : 1.0
+        tapped.toggle()
+        recentIndex = index
+      }
+      .onChange(of: recentIndex) { value in
+        checkOpacity(value: value)
+      }
+      .onAppear {
+        checkOpacity(value: recentIndex)
+      }
+  }
+  
+  func checkOpacity(value: Int) {
+    opacity = value >= index ? 1.0 : 0.4
+    tapped.toggle()
+  }
+}
+
+
+final class PetRankingViewModel: ObservableObject {
+  var animal: AnimalEntity
+  
+  var ranking: Int {
+    didSet {
+      animal.ranking = Int64(ranking)
+      objectWillChange.send()
+    }
+  }
+  
+  init(animal: AnimalEntity) {
+    self.animal = animal
+    self.ranking = Int(animal.ranking)
   }
 }

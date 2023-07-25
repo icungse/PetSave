@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,47 +31,56 @@
 /// THE SOFTWARE.
 
 import SwiftUI
-import MapKit
 
-struct AnimalLocationView: View {
-  let animal: AnimalEntity
+struct LoadingAnimation: UIViewRepresentable {
   
-  @StateObject var addressFetcher = AddressFetcher()
+  let animatedFrames: UIImage
+  let image: UIImageView
+  let squareDimension: CGFloat = 125
   
-  var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      Text("Location")
-        .font(.headline)
-      
-      Text(animal.address)
-        .font(.subheadline)
-        .textSelection(.enabled)
-      
-      Button(action: openAddressInMaps) {
-        Map(coordinateRegion: $addressFetcher.coordinates, interactionModes: [])
+  init() {
+    var images: [UIImage] = []
+    
+    for i in 1...127 {
+      guard let image = UIImage(named: "dog_\(String(format: "%03d", i))") else {
+        continue
       }
-      .buttonStyle(.plain)
-      .frame(height: 200)
-      .cornerRadius(16)
-      .task {
-        await addressFetcher.search(by: animal.address)
-      }
+      
+      images.append(image)
     }
+    
+    animatedFrames = UIImage.animatedImage(with: images, duration: 4) ?? UIImage()
+    image = UIImageView(frame: CGRect(x: 0, y: 0, width: squareDimension, height: squareDimension))
   }
   
-  func openAddressInMaps() {
-    let placemark = MKPlacemark(coordinate: addressFetcher.coordinates.center)
-    let mapItem = MKMapItem(placemark: placemark)
-    mapItem.openInMaps(launchOptions: nil)
+  func makeUIView(context: Context) -> UIView {
+    let view = UIView(frame: CGRect(x: 0, y: 0,
+                                    width: squareDimension, height: squareDimension))
+    image.clipsToBounds = true
+    image.autoresizesSubviews = true
+    image.contentMode = .scaleAspectFit
+    image.image = animatedFrames
+    image.center = CGPoint(x: view.frame.width / 2,
+                           y: view.frame.height / 2)
+    view.backgroundColor = .red
+    view.addSubview(image)
+    
+    return view
   }
+  
+  func updateUIView(_ uiView: UIView, context: Context) { }
 }
 
-struct AnimalLocationView_Previews: PreviewProvider {
-  static var previews: some View {
-    if let animal = CoreDataHelper.getTestAnimalEntity() {
-      AnimalLocationView(animal: animal)
-        .padding()
-        .previewLayout(.sizeThatFits)
+struct LoadingAnimationView: View {
+  var body: some View {
+    VStack {
+      LoadingAnimation()
     }
+  }
+}
+                          
+struct LoadingAnimation_Previews: PreviewProvider {
+  static var previews: some View {
+    LoadingAnimation()
   }
 }
