@@ -35,6 +35,9 @@ import SwiftUI
 struct AnimalListView<Context, Data>: View where Context: View, Data: RandomAccessCollection, Data.Element: AnimalEntity {
   let animals: Data
   let footer: Context
+  let router = AnimalDetailsRouter()
+  
+  @StateObject var navigationState = NavigationState()
   
   init(animals: Data, @ViewBuilder footer: () -> Context) {
     self.animals = animals
@@ -49,10 +52,17 @@ struct AnimalListView<Context, Data>: View where Context: View, Data: RandomAcce
   
   var body: some View {
     List {
+      Button(navigationState.isNavigatingDisabled ? "Enable Navigation" : "Disable Navigation") {
+        navigationState.isNavigatingDisabled.toggle()
+      }
       ForEach(animals) { animal in
-        NavigationLink(destination: AnimalDetailsView()) {
+        router.navigate(
+          data: animal,
+          navigationState: navigationState
+        ) {
           AnimalRow(animal: animal)
         }
+        .disabled(navigationState.isNavigatingDisabled)
       }
       
       footer

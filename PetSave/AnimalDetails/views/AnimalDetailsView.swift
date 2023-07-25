@@ -33,23 +33,54 @@
 import SwiftUI
 
 struct AnimalDetailsView: View {
+  var name: String
+  
+  @EnvironmentObject var navigationState: NavigationState
+  
   var body: some View {
-    Text("TODO: Animal Details")
+    Text(name)
+    
+    Button(
+      navigationState.isNavigatingDisabled ? "Enable Navigation" : "Disable Navigation"
+    ) {
+      navigationState.isNavigatingDisabled.toggle()
+    }
   }
 }
 
 struct AnimalsView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      AnimalDetailsView()
+      AnimalDetailsView(name: "Snow").environmentObject(NavigationState())
     }
     .previewLayout(.sizeThatFits)
     .previewDisplayName("iPhone SE (2nd generation)")
 
     NavigationView {
-      AnimalDetailsView()
+      AnimalDetailsView(name: "Snow").environmentObject(NavigationState())
     }
     .previewDevice("iPhone 12 Pro")
     .previewDisplayName("iPhone 12 Pro")
+  }
+}
+
+struct AnimalDetailsRouter: NavigationRouter {
+  typealias Data = AnimalEntity
+  
+  func navigate<T: View>(
+    data: AnimalEntity,
+    navigationState: NavigationState,
+    view: (() -> T)?
+  ) -> AnyView {
+    AnyView(
+      NavigationLink(
+        destination: AnimalDetailsViewRepresentable(
+          name: data.name ?? ""
+        )
+        .environmentObject(navigationState)
+      ) {
+        view?()
+      }
+    )
   }
 }
